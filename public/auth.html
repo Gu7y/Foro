@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Acceso y Registro</title>
+  <meta name="description" content="Ingresá o creá tu cuenta en Nexo, el foro universitario argentino.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .auth-bg {
+      min-height:100vh; display:flex; flex-direction:column;
+      background: radial-gradient(ellipse at 20% 50%, rgba(124,90,240,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%),
+                  var(--bg-base);
+    }
+    .auth-nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 24px; height:58px;
+      border-bottom:1px solid var(--border-color);
+    }
+    .auth-main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+    .tab-switch {
+      display:flex; background:var(--bg-elevated); border:1px solid var(--border-color);
+      border-radius:var(--radius-lg); padding:4px; margin-bottom:24px; gap:4px;
+    }
+    .tab-switch-btn {
+      flex:1; padding:8px; border:none; background:none;
+      border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:600;
+      color:var(--text-muted); cursor:pointer;
+      transition:background var(--transition-fast), color var(--transition-fast);
+    }
+    .tab-switch-btn.active {
+      background:var(--bg-surface); color:var(--accent-violet);
+      box-shadow:var(--shadow-sm);
+    }
+    .panel { display:none; flex-direction:column; gap:16px; }
+    .panel.active { display:flex; }
+  </style>
+</head>
+<body>
+<div class="auth-bg">
+  <nav class="auth-nav">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">N</div>
+      <span style="font-weight:700;font-size:18px;color:var(--text-main);">Nexo</span>
+    </a>
+    <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Cambiar tema">🌙</button>
+  </nav>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="brand-icon" style="width:48px;height:48px;font-size:24px;">N</div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:var(--text-main);">Nexo</div>
+          <div style="font-size:12px;color:var(--text-muted);">Foro Universitario</div>
+        </div>
+      </div>
+
+      <div class="tab-switch" role="tablist">
+        <button class="tab-switch-btn active" id="tabLogin" role="tab" aria-selected="true" aria-controls="panelLogin">Ingresar</button>
+        <button class="tab-switch-btn" id="tabRegister" role="tab" aria-selected="false" aria-controls="panelRegister">Registrarse</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div class="panel active" id="panelLogin" role="tabpanel">
+        <div id="loginAlert" style="display:none"></div>
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email o alias</label>
+            <input type="text" id="loginEmail" class="form-input" placeholder="tu@correo.com o alias" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Contraseña</label>
+            <div style="position:relative">
+              <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" autocomplete="current-password" required style="padding-right:42px">
+              <button type="button" id="toggleLoginPwd" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;" aria-label="Mostrar contraseña">👁</button>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end">
+            <a href="#" id="forgotLink" style="font-size:var(--text-xs);color:var(--accent-violet);">¿Olvidaste tu contraseña?</a>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Ingresar</button>
+        </form>
+        <div id="forgotPanel" style="display:none;flex-direction:column;gap:12px;">
+          <div class="alert alert-info">Ingresá tu email y te enviamos un enlace de recuperación.</div>
+          <div class="form-group">
+            <label class="form-label" for="recoverEmail">Email</label>
+            <input type="email" id="recoverEmail" class="form-input" placeholder="tu@correo.com">
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="showAlert('loginAlert','success','¡Enviado! Revisá tu correo.')">Enviar enlace</button>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="document.getElementById('forgotPanel').style.display='none';document.getElementById('loginForm').style.display='flex'">← Volver</button>
+        </div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="panel" id="panelRegister" role="tabpanel">
+        <div id="registerAlert" style="display:none"></div>
+        <form id="registerForm" class="auth-form" novalidate>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+              <label class="form-label" for="regNombre">Nombre</label>
+              <input type="text" id="regNombre" class="form-input" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="regAlias">Alias <span style="color:var(--accent-rose)">*</span></label>
+              <input type="text" id="regAlias" class="form-input" placeholder="sin_espacios" pattern="[a-zA-Z0-9_]+" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regEmail">Email <span style="color:var(--accent-rose)">*</span></label>
+            <input type="email" id="regEmail" class="form-input" placeholder="tu@correo.com" autocomplete="email" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regPassword">Contraseña <span style="color:var(--accent-rose)">*</span></label>
+            <div style="position:relative">
+              <input type="password" id="regPassword" class="form-input" placeholder="Mínimo 8 caracteres" autocomplete="new-password" required style="padding-right:42px">
+              <button type="button" id="toggleRegPwd" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;" aria-label="Mostrar contraseña">👁</button>
+            </div>
+            <div class="strength-bar" aria-label="Fortaleza de contraseña">
+              <div class="strength-seg" id="s1"></div>
+              <div class="strength-seg" id="s2"></div>
+              <div class="strength-seg" id="s3"></div>
+              <div class="strength-seg" id="s4"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regConfirm">Confirmar contraseña <span style="color:var(--accent-rose)">*</span></label>
+            <input type="password" id="regConfirm" class="form-input" placeholder="Repetí tu contraseña" autocomplete="new-password" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regCarrera">Carrera (opcional)</label>
+            <select id="regCarrera" class="form-select">
+              <option value="">Seleccionar carrera...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="regSede">Sede (opcional)</label>
+            <select id="regSede" class="form-select">
+              <option value="">Seleccionar sede...</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:8px;font-size:var(--text-xs);color:var(--text-muted);">
+            <input type="checkbox" id="regTerms" style="margin-top:2px;accent-color:var(--accent-violet);" required>
+            <label for="regTerms">Acepto los <a href="#" style="color:var(--accent-violet)">Términos de uso</a> y la <a href="#" style="color:var(--accent-violet)">Política de privacidad</a></label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Crear cuenta</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script>
+  /* Theme */
+  (function(){ const t=localStorage.getItem('nexo-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); document.getElementById('themeToggleBtn').innerHTML=t==='dark'?'☀️':'🌙'; })();
+  document.getElementById('themeToggleBtn').addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); const n=c==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); localStorage.setItem('nexo-theme',n); document.getElementById('themeToggleBtn').innerHTML=n==='dark'?'☀️':'🌙'; });
+
+  /* Tab switch */
+  function showPanel(name) {
+    ['Login','Register'].forEach(p => {
+      document.getElementById('panel'+p).classList.toggle('active', p===name);
+      document.getElementById('tab'+p).classList.toggle('active', p===name);
+      document.getElementById('tab'+p).setAttribute('aria-selected', p===name);
+    });
+  }
+  document.getElementById('tabLogin').addEventListener('click', ()=>showPanel('Login'));
+  document.getElementById('tabRegister').addEventListener('click', ()=>showPanel('Register'));
+
+  /* Forgot password */
+  document.getElementById('forgotLink').addEventListener('click', e=>{
+    e.preventDefault();
+    document.getElementById('loginForm').style.display='none';
+    document.getElementById('forgotPanel').style.display='flex';
+  });
+
+  /* Toggle password visibility */
+  ['Login','Reg'].forEach(prefix => {
+    const btn = document.getElementById('toggle'+prefix+'Pwd');
+    if (!btn) return;
+    const inp = document.getElementById(prefix.toLowerCase()+'Password') || document.getElementById(prefix.toLowerCase()+'password');
+    btn?.addEventListener('click', ()=>{
+      const field = document.getElementById(prefix==='Login'?'loginPassword':'regPassword');
+      field.type = field.type==='password'?'text':'password';
+    });
+  });
+
+  /* Password strength */
+  document.getElementById('regPassword').addEventListener('input', function(){
+    const v = this.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const cls = score<=1?'weak':score<=2?'medium':'strong';
+    [1,2,3,4].forEach(i => {
+      const s = document.getElementById('s'+i);
+      s.className = 'strength-seg' + (i<=score?' '+cls:'');
+    });
+  });
+
+  /* Alert helper */
+  function showAlert(id, type, msg) {
+    const el = document.getElementById(id);
+    el.className = 'alert alert-'+type;
+    el.textContent = msg;
+    el.style.display = 'flex';
+  }
+
+  /* Populate selects */
+  const cSel = document.getElementById('regCarrera');
+  NEXO.carreras.forEach(c => { const o=document.createElement('option'); o.value=c.id; o.textContent=c.nombre; cSel.appendChild(o); });
+  const sSel = document.getElementById('regSede');
+  NEXO.sedes.forEach(s => { const o=document.createElement('option'); o.value=s.id; o.textContent=s.nombre; sSel.appendChild(o); });
+
+  /* Login */
+  document.getElementById('loginForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const pwd   = document.getElementById('loginPassword').value;
+    if (!email||!pwd) return showAlert('loginAlert','warning','Completá todos los campos.');
+    showAlert('loginAlert','info','Verificando...');
+    setTimeout(()=>{ window.location.href='index.html'; }, 800);
+  });
+
+  /* Register */
+  document.getElementById('registerForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const alias   = document.getElementById('regAlias').value.trim();
+    const email   = document.getElementById('regEmail').value.trim();
+    const pwd     = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+    const terms   = document.getElementById('regTerms').checked;
+    if (!alias||!email||!pwd) return showAlert('registerAlert','warning','Completá los campos obligatorios.');
+    if (pwd !== confirm) return showAlert('registerAlert','danger','Las contraseñas no coinciden.');
+    if (!terms) return showAlert('registerAlert','warning','Aceptá los términos para continuar.');
+    if (!/^[a-zA-Z0-9_]+$/.test(alias)) return showAlert('registerAlert','danger','El alias solo puede tener letras, números y _.');
+    showAlert('registerAlert','success','¡Cuenta creada! Revisá tu email para verificarla.');
+    setTimeout(()=>{ window.location.href='index.html'; }, 1200);
+  });
+</script>
+</body>
+</html>

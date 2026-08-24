@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Detalle de publicación</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<div class="app-container">
+  <header class="navbar">
+    <div class="nav-brand"><a href="index.html" class="brand-logo"><div class="brand-icon">N</div><span>Nexo</span></a></div>
+    <div class="search-container"><div class="search-input-wrapper"><svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="search" class="search-input" placeholder="Buscar en Nexo..."></div></div>
+    <div class="nav-actions">
+      <button id="themeToggleBtn" class="theme-toggle-btn">🌙</button>
+      <a href="perfil.html" class="user-profile-btn"><div class="avatar">L</div><div class="user-info"><span class="user-name">lucas_isi</span></div></a>
+    </div>
+  </header>
+  <div class="main-wrapper">
+    <aside class="sidebar-left">
+      <nav class="nav-menu">
+        <span class="menu-label">Navegación</span>
+        <a href="index.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Feed Principal</span></a>
+        <a href="apuntes.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Banco de Apuntes</span></a>
+      </nav>
+    </aside>
+    <main class="content-feed">
+      <div id="postDetail"></div>
+      <div id="commentSection" style="margin-top:20px;"></div>
+    </main>
+    <aside class="sidebar-right">
+      <div class="widget-card" id="postSideInfo"></div>
+      <div class="widget-card">
+        <div class="widget-title"><span>🚩 Reportar</span></div>
+        <p style="font-size:var(--text-xs);color:var(--text-muted);margin-bottom:10px;">¿Encontraste un problema con este contenido?</p>
+        <button class="btn btn-danger btn-sm" onclick="document.getElementById('reportModal').classList.add('open')">Reportar publicación</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Report modal -->
+<div id="reportModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-header"><h2 class="modal-title">Reportar contenido</h2><button class="btn-icon close-modal-btn">&times;</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label" for="reportMotivo">Motivo</label>
+        <select id="reportMotivo" class="form-select">
+          <option>Contenido inapropiado</option>
+          <option>Spam o publicidad</option>
+          <option>Información falsa</option>
+          <option>Acoso o intimidación</option>
+          <option>Fuera de tema</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label" for="reportDesc">Descripción (opcional)</label><textarea id="reportDesc" class="form-textarea" rows="3" placeholder="Explicá brevemente el problema..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary close-modal-btn">Cancelar</button>
+      <button class="btn btn-danger" onclick="document.getElementById('reportModal').classList.remove('open');alert('Reporte enviado. Gracias por contribuir a la comunidad.')">Enviar reporte</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script>
+  (function(){ const t=localStorage.getItem('nexo-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); document.getElementById('themeToggleBtn').innerHTML=t==='dark'?'☀️':'🌙'; })();
+  document.getElementById('themeToggleBtn').addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); const n=c==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); localStorage.setItem('nexo-theme',n); document.getElementById('themeToggleBtn').innerHTML=n==='dark'?'☀️':'🌙'; });
+
+  const params = new URLSearchParams(location.search);
+  const postId = Number(params.get('id')) || 1;
+  const TIPO_CLASS = { apunte:'badge-apunte', duda:'badge-duda', informacion:'badge-info', grupo_estudio:'badge-grupo' };
+  const TIPO_LABEL = { apunte:'Apunte', duda:'Duda', informacion:'Info', grupo_estudio:'Grupo' };
+
+  const post = NEXO.posts.find(p=>p.id===postId) || NEXO.posts[0];
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // Render post detail
+  document.getElementById('postDetail').innerHTML = `
+    <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;">
+      <div style="display:flex;">
+        <div class="vote-col" style="padding:16px 10px;">
+          <button class="vote-btn up${post.miVoto===1?' active':''}" id="voteUp" aria-label="Votar positivo"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg></button>
+          <span class="vote-count positive" id="voteCount" style="font-size:16px;font-weight:800;">${post.votos}</span>
+          <button class="vote-btn down${post.miVoto===-1?' active':''}" id="voteDown" aria-label="Votar negativo"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg></button>
+        </div>
+        <div style="flex:1;padding:20px 20px 16px;">
+          <div class="post-meta" style="margin-bottom:12px;">
+            <a class="post-community" href="comunidad.html?slug=${post.comunidad_slug}">r/${post.comunidad}</a>
+            <span>•</span><span>u/<a href="perfil.html?alias=${post.autor}" style="color:var(--accent-violet)">${post.autor}</a></span>
+            <span>•</span><span>${post.hace}</span>
+            ${post.materia?`<span>•</span><span class="tag">${post.materia}</span>`:''}
+          </div>
+          <div class="post-tags" style="margin-bottom:10px;"><span class="post-badge ${TIPO_CLASS[post.tipo]}">${TIPO_LABEL[post.tipo]}</span>${post.tags.map(t=>`<span class="tag">#${t}</span>`).join('')}</div>
+          <h1 style="font-size:var(--text-xl);font-weight:800;color:var(--text-main);margin-bottom:12px;line-height:1.3;">${esc(post.titulo)}</h1>
+          <p style="font-size:var(--text-md);color:var(--text-secondary);line-height:1.65;white-space:pre-wrap;">${esc(post.descripcion)}</p>
+          ${post.archivos.length ? `<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">${post.archivos.map(f=>`<a class="file-pill" href="#"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>${f.nombre}</a>`).join('')}</div>` : ''}
+          <div class="post-actions" style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border-subtle);">
+            <button class="post-action-btn save-btn${post.guardado?' saved':''}" id="saveBtn"><svg width="14" height="14" fill="${post.guardado?'currentColor':'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg><span>${post.guardado?'Guardado':'Guardar'}</span></button>
+            <button class="post-action-btn" onclick="navigator.clipboard.writeText(location.href)"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg><span>Compartir</span></button>
+            ${post.autor==='lucas_isi'?`<button class="post-action-btn text-rose">🗑️ Eliminar</button>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // Vote handlers
+  document.getElementById('voteUp').addEventListener('click', () => {
+    if (post.miVoto===1){ post.votos--; post.miVoto=0; } else { post.votos+=1-post.miVoto; post.miVoto=1; }
+    document.getElementById('voteCount').textContent = post.votos;
+    document.getElementById('voteUp').classList.toggle('active', post.miVoto===1);
+    document.getElementById('voteDown').classList.toggle('active', false);
+  });
+  document.getElementById('voteDown').addEventListener('click', () => {
+    if (post.miVoto===-1){ post.votos++; post.miVoto=0; } else { post.votos+=-1-post.miVoto; post.miVoto=-1; }
+    document.getElementById('voteCount').textContent = post.votos;
+    document.getElementById('voteUp').classList.toggle('active', false);
+    document.getElementById('voteDown').classList.toggle('active', post.miVoto===-1);
+  });
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    post.guardado = !post.guardado;
+    document.getElementById('saveBtn').innerHTML = `<svg width="14" height="14" fill="${post.guardado?'currentColor':'none'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg><span>${post.guardado?'Guardado':'Guardar'}</span>`;
+    document.getElementById('saveBtn').classList.toggle('saved', post.guardado);
+  });
+
+  // Side info
+  document.getElementById('postSideInfo').innerHTML = `
+    <div class="widget-title"><a href="comunidad.html?slug=${post.comunidad_slug}" style="color:var(--text-main);">r/${post.comunidad}</a></div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Comunidad universitaria · ${post.sede||'—'}</p>
+    <div style="font-size:12px;color:var(--text-muted);display:flex;flex-direction:column;gap:4px;">
+      <span>👤 Autor: <a href="perfil.html?alias=${post.autor}" style="color:var(--accent-violet)">u/${post.autor}</a></span>
+      ${post.materia?`<span>📚 Materia: ${post.materia}</span>`:''}
+      <span>⬆️ ${post.votos} puntos · 💬 ${post.comentarios} comentarios</span>
+    </div>`;
+
+  // Comments
+  function renderComments(list, depth=0) {
+    if (!list||!list.length) return '';
+    return list.map(c => `
+      <div class="comment" style="${depth>0?'padding-left:0;':''}" id="cmt-${c.id}">
+        <div class="avatar sm">${c.inicial}</div>
+        <div class="comment-body">
+          <div class="comment-meta"><span class="comment-author">u/${c.autor}</span><span>${c.hace}</span><span>⬆️ ${c.votos}</span></div>
+          <div class="comment-text">${esc(c.texto)}</div>
+          <div class="comment-actions">
+            <button class="post-action-btn" onclick="toggleReply(${c.id})">Responder</button>
+            <button class="post-action-btn vote-btn up" style="width:auto;padding:4px 8px;" onclick="voteComment(${c.id},1)">▲</button>
+            <button class="post-action-btn vote-btn down" style="width:auto;padding:4px 8px;" onclick="voteComment(${c.id},-1)">▼</button>
+          </div>
+          <div id="reply-${c.id}" style="display:none;margin-top:8px;">
+            <div style="display:flex;gap:8px;">
+              <input type="text" class="form-input" placeholder="Escribe tu respuesta..." id="replyInput-${c.id}" style="font-size:var(--text-xs);">
+              <button class="btn btn-primary btn-sm" onclick="submitReply(${c.id})">Responder</button>
+            </div>
+          </div>
+          ${c.respuestas&&c.respuestas.length ? `<div class="comment-replies" style="margin-top:10px;">${renderComments(c.respuestas, depth+1)}</div>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
+  const comments = NEXO.comentarios[postId] || [];
+  let localComments = JSON.parse(JSON.stringify(comments));
+
+  function renderSection() {
+    document.getElementById('commentSection').innerHTML = `
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:20px;">
+        <h2 style="font-size:var(--text-md);font-weight:700;margin-bottom:16px;">Comentarios (${countAll(localComments)})</h2>
+        <div style="display:flex;gap:10px;margin-bottom:20px;">
+          <div class="avatar sm">L</div>
+          <div style="flex:1;">
+            <textarea id="newComment" class="form-textarea" rows="2" placeholder="Añadí tu comentario..."></textarea>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;"><button class="btn btn-primary btn-sm" onclick="addComment()">Comentar</button></div>
+          </div>
+        </div>
+        <div>${localComments.length ? renderComments(localComments) : '<div class="empty-state"><div class="empty-icon">💬</div><div class="empty-title">Sin comentarios</div><div class="empty-desc">¡Sé el primero en comentar!</div></div>'}</div>
+      </div>`;
+  }
+
+  function countAll(list){ return list.reduce((acc,c)=>acc+1+countAll(c.respuestas||[]),0); }
+
+  function addComment() {
+    const txt = document.getElementById('newComment').value.trim();
+    if (!txt) return;
+    localComments.unshift({ id:Date.now(), autor:'lucas_isi', inicial:'L', texto:txt, hace:'justo ahora', votos:0, miVoto:0, respuestas:[] });
+    renderSection();
+  }
+
+  function toggleReply(id) {
+    const el = document.getElementById('reply-'+id);
+    if (el) el.style.display = el.style.display==='none'?'block':'none';
+  }
+
+  function findComment(list, id) {
+    for (const c of list) { if (c.id===id) return c; const found=findComment(c.respuestas||[],id); if(found) return found; }
+    return null;
+  }
+
+  function submitReply(parentId) {
+    const inp = document.getElementById('replyInput-'+parentId);
+    const txt = inp?.value.trim();
+    if (!txt) return;
+    const parent = findComment(localComments, parentId);
+    if (!parent) return;
+    if (!parent.respuestas) parent.respuestas = [];
+    parent.respuestas.push({ id:Date.now(), autor:'lucas_isi', inicial:'L', texto:txt, hace:'justo ahora', votos:0, miVoto:0, respuestas:[] });
+    renderSection();
+  }
+
+  function voteComment(id, dir) {
+    const c = findComment(localComments, id);
+    if (!c) return;
+    if (c.miVoto===dir){ c.votos-=dir; c.miVoto=0; } else { c.votos+=dir-(c.miVoto||0); c.miVoto=dir; }
+    renderSection();
+  }
+
+  // Report modal
+  const rm=document.getElementById('reportModal');
+  document.querySelectorAll('.close-modal-btn').forEach(b=>b.addEventListener('click',()=>rm.classList.remove('open')));
+  rm.addEventListener('click',e=>{ if(e.target===rm)rm.classList.remove('open'); });
+
+  renderSection();
+</script>
+</body>
+</html>

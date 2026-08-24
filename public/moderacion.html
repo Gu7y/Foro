@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Moderación</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<div class="app-container">
+  <header class="navbar">
+    <div class="nav-brand"><a href="index.html" class="brand-logo"><div class="brand-icon">N</div><span>Nexo</span></a></div>
+    <div class="nav-actions" style="margin-left:auto;">
+      <button id="themeToggleBtn" class="theme-toggle-btn">🌙</button>
+      <a href="perfil.html" class="user-profile-btn"><div class="avatar">M</div><div class="user-info"><span class="user-name">mod_sistemas</span><span class="user-role">Moderador</span></div></a>
+    </div>
+  </header>
+  <div class="main-wrapper">
+    <aside class="sidebar-left">
+      <nav class="nav-menu">
+        <span class="menu-label">Moderación</span>
+        <a href="index.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>← Feed</span></a>
+        <a href="moderacion.html" class="nav-item active"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span>Cola de Reportes</span></a>
+        <a href="admin.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg><span>Administración</span></a>
+      </nav>
+    </aside>
+    <main class="content-feed">
+      <div style="margin-bottom:20px;">
+        <h1 style="font-size:var(--text-xl);font-weight:800;">Cola de Reportes</h1>
+        <p style="font-size:var(--text-sm);color:var(--text-muted);margin-top:2px;">Revisá y resolvé los reportes de contenido de tu comunidad</p>
+      </div>
+      <div class="page-tabs" style="margin-bottom:16px;">
+        <button class="page-tab active" data-filter="">Todos</button>
+        <button class="page-tab" data-filter="pendiente">Pendientes</button>
+        <button class="page-tab" data-filter="en_revision">En revisión</button>
+        <button class="page-tab" data-filter="resuelto">Resueltos</button>
+      </div>
+      <div id="reportesContainer" style="display:flex;flex-direction:column;gap:12px;"></div>
+    </main>
+    <aside class="sidebar-right">
+      <div class="widget-card">
+        <div class="widget-title"><span>📊 Resumen</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Pendientes</span><strong style="color:var(--accent-amber)" id="cntPendiente">0</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">En revisión</span><strong style="color:var(--accent-blue)" id="cntRevision">0</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Resueltos hoy</span><strong style="color:var(--accent-emerald)" id="cntResuelto">0</strong></div>
+        </div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-title"><span>⚖️ Acciones disponibles</span></div>
+        <div style="font-size:var(--text-xs);color:var(--text-muted);line-height:1.6;">
+          <p>✅ <strong>Desestimar</strong> — El reporte no es válido.</p>
+          <p>🙈 <strong>Ocultar</strong> — Se oculta el contenido.</p>
+          <p>🗑️ <strong>Eliminar</strong> — Se elimina el contenido.</p>
+          <p>⚠️ <strong>Advertir</strong> — Se notifica al usuario.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Modal resolución -->
+<div id="modModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 class="modal-title">Resolver reporte</h2>
+      <button class="btn-icon close-modal-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-warning" id="modAlert">Estás por resolver un reporte. Esta acción queda registrada en el log de moderación.</div>
+      <div class="form-group">
+        <label class="form-label" for="modAccion">Acción</label>
+        <select id="modAccion" class="form-select">
+          <option value="desestimado">Desestimar reporte</option>
+          <option value="ocultar">Ocultar contenido</option>
+          <option value="eliminar">Eliminar contenido</option>
+          <option value="advertir">Advertir al usuario</option>
+          <option value="suspender">Suspender usuario (7 días)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="modNota">Nota interna (opcional)</label>
+        <textarea id="modNota" class="form-textarea" rows="2" placeholder="Razón de la decisión..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary close-modal-btn">Cancelar</button>
+      <button class="btn btn-primary" id="modConfirm">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script>
+  (function(){ const t=localStorage.getItem('nexo-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); document.getElementById('themeToggleBtn').innerHTML=t==='dark'?'☀️':'🌙'; })();
+  document.getElementById('themeToggleBtn').addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); const n=c==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); localStorage.setItem('nexo-theme',n); document.getElementById('themeToggleBtn').innerHTML=n==='dark'?'☀️':'🌙'; });
+
+  const TIPO_LABEL = { publicacion:'📄 Publicación', comentario:'💬 Comentario', mensaje:'📨 Mensaje', usuario:'👤 Usuario' };
+  const modal = document.getElementById('modModal');
+  let activeReporteId = null;
+
+  function badgeClass(e) { return { pendiente:'badge-pendiente', en_revision:'badge-revision', desestimado:'badge-desestimado', resuelto:'badge-resuelto' }[e]||''; }
+  function badgeLabel(e) { return { pendiente:'Pendiente', en_revision:'En revisión', desestimado:'Desestimado', resuelto:'Resuelto' }[e]||e; }
+
+  let filterEstado = '';
+
+  function updateStats() {
+    document.getElementById('cntPendiente').textContent = NEXO.reportes.filter(r=>r.estado==='pendiente').length;
+    document.getElementById('cntRevision').textContent  = NEXO.reportes.filter(r=>r.estado==='en_revision').length;
+    document.getElementById('cntResuelto').textContent  = NEXO.reportes.filter(r=>r.estado==='resuelto').length;
+  }
+
+  function renderReportes() {
+    const list = filterEstado ? NEXO.reportes.filter(r=>r.estado===filterEstado) : NEXO.reportes;
+    const c = document.getElementById('reportesContainer');
+    updateStats();
+    if (!list.length) { c.innerHTML='<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Sin reportes</div></div>'; return; }
+    c.innerHTML = list.map(r => `
+      <div class="report-item" id="rep-${r.id}">
+        <div class="report-header">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span class="report-badge ${badgeClass(r.estado)}">${badgeLabel(r.estado)}</span>
+            <span style="font-size:var(--text-xs);color:var(--text-muted);">${TIPO_LABEL[r.tipo_contenido]} #${r.contenido_id}</span>
+          </div>
+          <span style="font-size:var(--text-xs);color:var(--text-muted);">${r.hace}</span>
+        </div>
+        <div>
+          <div style="font-size:var(--text-sm);font-weight:600;color:var(--text-main);">${r.motivo}</div>
+          ${r.descripcion ? `<div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:3px;">${r.descripcion}</div>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:var(--text-xs);color:var(--text-muted);">Reportado por u/${r.reportado_por}</span>
+          ${r.estado === 'pendiente' || r.estado === 'en_revision' ? `
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary btn-sm" onclick="toRevision(${r.id})">Tomar caso</button>
+            <button class="btn btn-primary btn-sm" onclick="openModal(${r.id})">Resolver</button>
+          </div>` : ''}
+        </div>
+      </div>`).join('');
+  }
+
+  function toRevision(id) {
+    const r = NEXO.reportes.find(x=>x.id===id);
+    if (r) { r.estado = 'en_revision'; renderReportes(); }
+  }
+
+  function openModal(id) {
+    activeReporteId = id;
+    document.getElementById('modNota').value = '';
+    modal.classList.add('open');
+  }
+
+  document.getElementById('modConfirm').addEventListener('click', () => {
+    const r = NEXO.reportes.find(x=>x.id===activeReporteId);
+    if (!r) return;
+    const accion = document.getElementById('modAccion').value;
+    r.estado = accion === 'desestimado' ? 'desestimado' : 'resuelto';
+    modal.classList.remove('open');
+    renderReportes();
+  });
+
+  document.querySelectorAll('.close-modal-btn').forEach(b=>b.addEventListener('click',()=>modal.classList.remove('open')));
+  modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+  document.querySelectorAll('.page-tab[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.page-tab[data-filter]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    filterEstado = btn.dataset.filter;
+    renderReportes();
+  }));
+
+  renderReportes();
+</script>
+</body>
+</html>

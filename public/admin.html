@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Administración</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .admin-table { width:100%; border-collapse:collapse; font-size:var(--text-sm); }
+    .admin-table th { background:var(--bg-elevated); color:var(--text-muted); font-size:var(--text-xs); text-transform:uppercase; letter-spacing:0.05em; padding:10px 12px; text-align:left; border-bottom:1px solid var(--border-color); }
+    .admin-table td { padding:10px 12px; border-bottom:1px solid var(--border-subtle); color:var(--text-secondary); }
+    .admin-table tr:hover td { background:var(--bg-hover); }
+    .admin-table tr:last-child td { border-bottom:none; }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <header class="navbar">
+    <div class="nav-brand"><a href="index.html" class="brand-logo"><div class="brand-icon">N</div><span>Nexo</span></a></div>
+    <div class="nav-actions" style="margin-left:auto;">
+      <button id="themeToggleBtn" class="theme-toggle-btn">🌙</button>
+      <a href="perfil.html" class="user-profile-btn"><div class="avatar" style="background:linear-gradient(135deg,#f05a7c,#f0a23a);">A</div><div class="user-info"><span class="user-name">admin_nexo</span><span class="user-role">Administrador</span></div></a>
+    </div>
+  </header>
+  <div class="main-wrapper">
+    <aside class="sidebar-left">
+      <nav class="nav-menu">
+        <span class="menu-label">Administración</span>
+        <a href="index.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>← Feed</span></a>
+        <a href="moderacion.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg><span>Moderación</span></a>
+        <a href="admin.html" class="nav-item active"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg><span>Administración</span></a>
+      </nav>
+    </aside>
+    <main class="content-feed">
+      <div style="margin-bottom:20px;">
+        <h1 style="font-size:var(--text-xl);font-weight:800;">Panel de Administración</h1>
+        <p style="font-size:var(--text-sm);color:var(--text-muted);margin-top:2px;">Gestión global de Nexo</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid" style="margin-bottom:24px;">
+        <div class="stat-card"><div class="stat-label">Usuarios</div><div class="stat-value">1,420</div><div class="stat-delta">+12 esta semana</div></div>
+        <div class="stat-card"><div class="stat-label">Publicaciones</div><div class="stat-value">3,847</div><div class="stat-delta">+84 esta semana</div></div>
+        <div class="stat-card"><div class="stat-label">Grupos activos</div><div class="stat-value">47</div><div class="stat-delta">+5 esta semana</div></div>
+        <div class="stat-card"><div class="stat-label">Reportes pendientes</div><div class="stat-value" style="color:var(--accent-amber);">2</div><div class="stat-delta negative">Requieren atención</div></div>
+      </div>
+
+      <div class="page-tabs" style="margin-bottom:20px;">
+        <button class="page-tab active" data-tab="usuarios">Usuarios</button>
+        <button class="page-tab" data-tab="comunidades">Comunidades</button>
+        <button class="page-tab" data-tab="catalogo">Catálogo</button>
+        <button class="page-tab" data-tab="auditoria">Auditoría</button>
+      </div>
+
+      <!-- Tab: Usuarios -->
+      <div id="tabUsuarios">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <input type="search" class="form-input" placeholder="Buscar usuario..." style="max-width:260px;" id="searchUser">
+          <button class="btn btn-primary btn-sm">+ Nuevo usuario</button>
+        </div>
+        <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;">
+          <table class="admin-table" id="userTable">
+            <thead><tr><th>Alias</th><th>Email</th><th>Carrera</th><th>Reputación</th><th>Rol</th><th>Acciones</th></tr></thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Comunidades -->
+      <div id="tabComunidades" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <span style="font-size:var(--text-sm);color:var(--text-muted);">${NEXO.comunidades?.length || 4} comunidades</span>
+          <button class="btn btn-primary btn-sm">+ Nueva comunidad</button>
+        </div>
+        <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;" id="comunidadTable"></div>
+      </div>
+
+      <!-- Tab: Catálogo -->
+      <div id="tabCatalogo" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="font-size:var(--text-md);font-weight:700;">Carreras</h3><button class="btn btn-primary btn-sm">+ Agregar</button></div>
+            <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;" id="carreraList"></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><h3 style="font-size:var(--text-md);font-weight:700;">Materias</h3><button class="btn btn-primary btn-sm">+ Agregar</button></div>
+            <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;" id="materiaList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Auditoría -->
+      <div id="tabAuditoria" style="display:none;">
+        <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);overflow:hidden;">
+          <table class="admin-table">
+            <thead><tr><th>Moderador</th><th>Acción</th><th>Referencia</th><th>Fecha</th></tr></thead>
+            <tbody id="auditBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <aside class="sidebar-right">
+      <div class="widget-card">
+        <div class="widget-title"><span>⚡ Acciones rápidas</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="moderacion.html" class="btn btn-secondary btn-sm" style="justify-content:flex-start;gap:8px;"><span>🛡️</span>Ver cola de reportes</a>
+          <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;gap:8px;"><span>📧</span>Enviar anuncio</button>
+          <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;gap:8px;"><span>💾</span>Exportar base de datos</button>
+          <button class="btn btn-danger btn-sm" style="justify-content:flex-start;gap:8px;"><span>🔒</span>Bloquear usuario</button>
+        </div>
+      </div>
+      <div class="widget-card">
+        <div class="widget-title"><span>📈 Actividad hoy</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:var(--text-xs);color:var(--text-muted);">
+          <div style="display:flex;justify-content:space-between;"><span>Nuevos registros</span><strong style="color:var(--text-main)">8</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span>Publicaciones</span><strong style="color:var(--text-main)">24</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span>Grupos creados</span><strong style="color:var(--text-main)">3</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span>Reportes nuevos</span><strong style="color:var(--accent-rose)">2</strong></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script>
+  (function(){ const t=localStorage.getItem('nexo-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); document.getElementById('themeToggleBtn').innerHTML=t==='dark'?'☀️':'🌙'; })();
+  document.getElementById('themeToggleBtn').addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); const n=c==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); localStorage.setItem('nexo-theme',n); document.getElementById('themeToggleBtn').innerHTML=n==='dark'?'☀️':'🌙'; });
+
+  const mockUsers = [
+    { alias:'admin_nexo', email:'admin@nexo.edu.ar', carrera:'—', rep:500, rol:'Administrador' },
+    { alias:'maria_dev', email:'maria@correo.com', carrera:'Sistemas', rep:245, rol:'Usuario' },
+    { alias:'lucas_isi', email:'lucas@correo.com', carrera:'Sistemas', rep:180, rol:'Usuario' },
+    { alias:'sofia_db', email:'sofia@correo.com', carrera:'Sistemas', rep:310, rol:'Usuario' },
+    { alias:'tomas_redes', email:'tomas@correo.com', carrera:'Sistemas', rep:95, rol:'Usuario' },
+    { alias:'mod_sistemas', email:'modsistemas@nexo.edu.ar', carrera:'Sistemas', rep:400, rol:'Moderador' },
+  ];
+
+  const auditLog = [
+    { mod:'mod_sistemas', accion:'Reporte desestimado', ref:'Publicación #4', fecha:'hace 2 días' },
+    { mod:'mod_sistemas', accion:'Comentario ocultado', ref:'Comentario #2', fecha:'hace 2 horas' },
+    { mod:'admin_nexo', accion:'Moderador asignado', ref:'u/mod_sistemas → Sistemas UTN-BA', fecha:'hace 5 días' },
+    { mod:'admin_nexo', accion:'Comunidad creada', ref:'r/sistemas-utn-ba', fecha:'hace 7 días' },
+  ];
+
+  function renderUsers(list) {
+    document.getElementById('userTableBody').innerHTML = list.map(u => `
+      <tr>
+        <td><strong style="color:var(--text-main)">u/${u.alias}</strong></td>
+        <td>${u.email}</td>
+        <td>${u.carrera}</td>
+        <td><span style="color:${u.rep>300?'var(--accent-emerald)':u.rep>100?'var(--accent-violet)':'var(--text-muted)'}">⭐ ${u.rep}</span></td>
+        <td><span class="post-badge ${u.rol==='Administrador'?'badge-duda':u.rol==='Moderador'?'badge-info':'badge-apunte'}">${u.rol}</span></td>
+        <td style="display:flex;gap:6px;">
+          <button class="btn btn-secondary btn-sm">Editar</button>
+          <button class="btn btn-danger btn-sm">Suspender</button>
+        </td>
+      </tr>`).join('');
+  }
+
+  function renderAudit() {
+    document.getElementById('auditBody').innerHTML = auditLog.map(a => `
+      <tr>
+        <td><strong style="color:var(--text-main)">u/${a.mod}</strong></td>
+        <td>${a.accion}</td>
+        <td style="color:var(--text-muted);font-size:var(--text-xs);">${a.ref}</td>
+        <td style="color:var(--text-muted);font-size:var(--text-xs);">${a.fecha}</td>
+      </tr>`).join('');
+  }
+
+  function renderComunidades() {
+    document.getElementById('comunidadTable').innerHTML = `<table class="admin-table"><thead><tr><th>Nombre</th><th>Slug</th><th>Miembros</th><th>Acciones</th></tr></thead><tbody>` +
+      NEXO.comunidades.map(c=>`<tr><td><strong style="color:var(--text-main)">${c.nombre}</strong></td><td style="color:var(--text-muted)">r/${c.slug}</td><td>${c.miembros}</td><td><button class="btn btn-secondary btn-sm">Editar</button></td></tr>`).join('') +
+      `</tbody></table>`;
+  }
+
+  function renderCatalogo() {
+    document.getElementById('carreraList').innerHTML = `<table class="admin-table"><thead><tr><th>Carrera</th><th></th></tr></thead><tbody>` +
+      NEXO.carreras.map(c=>`<tr><td>${c.nombre}</td><td><button class="btn btn-ghost btn-sm">✏️</button></td></tr>`).join('') + `</tbody></table>`;
+    document.getElementById('materiaList').innerHTML = `<table class="admin-table"><thead><tr><th>Materia</th><th>Código</th></tr></thead><tbody>` +
+      NEXO.materias.map(m=>`<tr><td>${m.nombre}</td><td style="color:var(--text-muted)">${m.codigo}</td></tr>`).join('') + `</tbody></table>`;
+  }
+
+  /* Tabs */
+  const tabs = { usuarios:'tabUsuarios', comunidades:'tabComunidades', catalogo:'tabCatalogo', auditoria:'tabAuditoria' };
+  document.querySelectorAll('.page-tab[data-tab]').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.page-tab[data-tab]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    Object.values(tabs).forEach(id => document.getElementById(id).style.display='none');
+    document.getElementById(tabs[btn.dataset.tab]).style.display='';
+  }));
+
+  /* Search users */
+  document.getElementById('searchUser').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    renderUsers(mockUsers.filter(u=>u.alias.includes(q)||u.email.includes(q)));
+  });
+
+  renderUsers(mockUsers);
+  renderAudit();
+  renderComunidades();
+  renderCatalogo();
+</script>
+</body>
+</html>

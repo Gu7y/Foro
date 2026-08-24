@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Feed Principal — Tu Comunidad Universitaria</title>
+  <meta name="description" content="Nexo: el foro universitario argentino. Compartí apuntes, resolvé dudas y encontrá grupos de estudio.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<div class="app-container">
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">N</div>
+        <span>Nexo</span>
+        <span class="brand-tag">Universitario</span>
+      </a>
+    </div>
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="search" id="globalSearchInput" class="search-input" placeholder="Buscar apuntes, materias, publicaciones..." aria-label="Buscar en Nexo">
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Cambiar tema">🌙</button>
+      <a href="notificaciones.html" class="btn-icon" aria-label="Notificaciones" title="Notificaciones">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      </a>
+      <button id="openCreatePostBtn" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+        <span>Crear Post</span>
+      </button>
+      <a href="perfil.html" class="user-profile-btn">
+        <div class="avatar">L</div>
+        <div class="user-info">
+          <span class="user-name">lucas_isi</span>
+          <span class="user-role">Sistemas · 3° año</span>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- 3 COLUMNS -->
+  <div class="main-wrapper">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar-left">
+      <nav class="nav-menu" aria-label="Navegación principal">
+        <span class="menu-label">Navegación</span>
+        <a href="index.html" class="nav-item active" aria-current="page">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span>Feed Principal</span>
+        </a>
+        <a href="apuntes.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Banco de Apuntes</span>
+        </a>
+        <a href="grupos.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span>Grupos de Estudio</span>
+        </a>
+        <a href="notificaciones.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span>Notificaciones</span>
+        </a>
+      </nav>
+
+      <div class="nav-menu">
+        <span class="menu-label">Mis Comunidades</span>
+        <a href="comunidad.html?slug=sistemas-utn-ba" class="nav-item">
+          <div class="avatar" style="width:20px;height:20px;font-size:9px;border-radius:4px;">S</div>
+          <span>Sistemas UTN-BA</span>
+        </a>
+        <a href="comunidad.html?slug=general" class="nav-item">
+          <div class="avatar" style="width:20px;height:20px;font-size:9px;border-radius:4px;background:linear-gradient(135deg,#10d48e,#4a9cf0);">G</div>
+          <span>General — Nexo</span>
+        </a>
+      </div>
+
+      <div class="sidebar-filter-box">
+        <label class="menu-label" for="filterSede" style="padding:0">Filtrar por Sede</label>
+        <select id="filterSede" class="filter-select"></select>
+      </div>
+      <div class="sidebar-filter-box">
+        <label class="menu-label" for="filterCarrera" style="padding:0">Filtrar por Carrera</label>
+        <select id="filterCarrera" class="filter-select"></select>
+      </div>
+
+      <div style="margin-top:16px;">
+        <a href="moderacion.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span>Moderación</span>
+        </a>
+        <a href="admin.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Administración</span>
+        </a>
+        <a href="auth.html" class="nav-item">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span>Cerrar sesión</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- FEED -->
+    <main class="content-feed">
+      <div class="create-post-card">
+        <div class="avatar">L</div>
+        <input type="text" id="triggerCreatePost" class="create-post-input" placeholder="¿Qué querés compartir o consultar hoy?" readonly aria-label="Crear publicación">
+        <button class="btn-icon" title="Adjuntar apunte" onclick="document.getElementById('openCreatePostBtn').click()" aria-label="Adjuntar">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+        </button>
+      </div>
+
+      <div class="feed-tabs" role="tablist" aria-label="Ordenar publicaciones">
+        <button class="tab-btn active" role="tab" aria-selected="true">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Popular</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>Recientes</span>
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Top Apuntes</span>
+        </button>
+      </div>
+
+      <div id="postsContainer" aria-label="Lista de publicaciones"></div>
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="sidebar-right">
+      <div class="widget-card">
+        <div class="widget-title">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h5m-5 0V11m0 10V11m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          <span>Nexo — Comunidad</span>
+        </div>
+        <p style="font-size:12.5px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Espacio colaborativo para conectar estudiantes de distintas universidades, sedes y carreras.</p>
+        <div style="display:flex;gap:20px;font-size:12px;border-top:1px solid var(--border-color);padding-top:10px;">
+          <div><strong style="display:block;color:var(--text-main);font-size:15px;">1,420</strong><span style="color:var(--text-muted);">Estudiantes</span></div>
+          <div><strong style="display:block;color:var(--accent-emerald);font-size:15px;">348</strong><span style="color:var(--text-muted);">Apuntes</span></div>
+          <div><strong style="display:block;color:var(--accent-violet);font-size:15px;">47</strong><span style="color:var(--text-muted);">Grupos activos</span></div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:12px;" onclick="document.getElementById('openCreatePostBtn').click()">
+          Crear publicación
+        </button>
+      </div>
+
+      <div class="widget-card">
+        <div class="widget-title">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span>Grupos de Estudio Activos</span>
+        </div>
+        <div class="widget-item">
+          <div class="widget-item-info">
+            <div class="widget-item-title">AED — Parcial Octubre</div>
+            <div class="widget-item-sub">Mar y Jue 17:00 · Presencial · 3/6</div>
+          </div>
+          <a href="grupos.html" class="btn btn-secondary btn-sm">Unirme</a>
+        </div>
+        <div class="widget-item">
+          <div class="widget-item-info">
+            <div class="widget-item-title">Redes — Com. Medina</div>
+            <div class="widget-item-sub">Lun 18:00 · Mixto · 4/8</div>
+          </div>
+          <a href="grupos.html" class="btn btn-secondary btn-sm">Unirme</a>
+        </div>
+        <div class="widget-item">
+          <div class="widget-item-info">
+            <div class="widget-item-title">Bases de Datos — Final</div>
+            <div class="widget-item-sub">Vie 20:00 · Virtual · 2/5</div>
+          </div>
+          <a href="grupos.html" class="btn btn-secondary btn-sm">Solicitar</a>
+        </div>
+        <a href="grupos.html" class="btn btn-ghost" style="width:100%;margin-top:8px;justify-content:center;">Ver todos los grupos →</a>
+      </div>
+
+      <div class="widget-card">
+        <div class="widget-title">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          <span>Tags Populares</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <a class="tag" href="index.html?tag=parcial">#parcial</a>
+          <a class="tag" href="index.html?tag=apunte">#apunte</a>
+          <a class="tag" href="index.html?tag=final">#final</a>
+          <a class="tag" href="index.html?tag=consulta">#consulta</a>
+          <a class="tag" href="index.html?tag=examen-viejo">#examen-viejo</a>
+          <a class="tag" href="index.html?tag=resumen">#resumen</a>
+          <a class="tag" href="index.html?tag=grupo">#grupo</a>
+          <a class="tag" href="index.html?tag=tip">#tip</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación móvil">
+    <a href="index.html" class="mobile-nav-item active">
+      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Inicio</span>
+    </a>
+    <a href="apuntes.html" class="mobile-nav-item">
+      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <span>Apuntes</span>
+    </a>
+    <a href="index.html" class="mobile-nav-item" onclick="event.preventDefault();document.getElementById('openCreatePostBtn').click()">
+      <div style="width:44px;height:44px;background:var(--accent-violet);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:-12px;box-shadow:0 0 16px var(--accent-violet-glow);">
+        <svg width="22" height="22" fill="none" stroke="#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+      </div>
+      <span>Crear</span>
+    </a>
+    <a href="grupos.html" class="mobile-nav-item">
+      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      <span>Grupos</span>
+    </a>
+    <a href="perfil.html" class="mobile-nav-item">
+      <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>Perfil</span>
+    </a>
+  </nav>
+
+</div>
+
+<!-- MODAL: CREAR PUBLICACIÓN -->
+<div id="createPostModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">Crear publicación</h2>
+      <button class="btn-icon close-modal-btn" aria-label="Cerrar">&times;</button>
+    </div>
+    <form id="createPostForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="postComunidad">Comunidad</label>
+          <select id="postComunidad" class="form-select">
+            <option value="1">r/Sistemas UTN-BA</option>
+            <option value="4">r/General — Nexo</option>
+            <option value="2">r/Electrónica UTN-BA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postTagSelect">Tipo de publicación</label>
+          <select id="postTagSelect" class="form-select">
+            <option value="apunte">📄 Apunte / Resumen</option>
+            <option value="duda">❓ Duda / Consulta</option>
+            <option value="informacion">ℹ️ Información</option>
+            <option value="grupo_estudio">👥 Grupo de Estudio</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postTitleInput">Título <span style="color:var(--accent-rose)">*</span></label>
+          <input type="text" id="postTitleInput" class="form-input" placeholder="Ej: Resumen Parcial 2 — AED..." required maxlength="300">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postMateria">Materia (opcional)</label>
+          <select id="postMateria" class="form-select">
+            <option value="">Sin materia específica</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postContentInput">Descripción <span style="color:var(--accent-rose)">*</span></label>
+          <textarea id="postContentInput" class="form-textarea" rows="4" placeholder="Describí el contenido de tu publicación..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postFile">Adjuntar archivo (PDF, imagen)</label>
+          <input type="file" id="postFile" class="form-input" accept=".pdf,.jpg,.jpeg,.png,.webp" style="padding:6px;">
+          <span class="form-hint">Máx. 10 MB · PDF, JPG, PNG, WebP</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal-btn">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Publicar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // populate materia select in modal
+  const sel = document.getElementById('postMateria');
+  NEXO.materias.forEach(m => {
+    const o = document.createElement('option');
+    o.value = m.id; o.textContent = m.nombre;
+    sel.appendChild(o);
+  });
+</script>
+</body>
+</html>

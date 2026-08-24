@@ -1,0 +1,16 @@
+# Entorno y variables secretas
+.env
+.env.local
+
+# Logs y bases de datos locales
+*.log
+*.sqlite
+*.db
+
+# Node.js / Dependencias
+node_modules/
+npm-debug.log
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db

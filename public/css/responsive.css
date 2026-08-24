@@ -1,0 +1,100 @@
+/* NEXO — responsive.css */
+
+/* ── Tablet (≤1024px) ── */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-right-w: 260px;
+    --sidebar-left-w: 200px;
+  }
+  .brand-tag { display: none; }
+}
+
+/* ── Small tablet (≤860px) — drop right sidebar ── */
+@media (max-width: 860px) {
+  .main-wrapper {
+    grid-template-columns: var(--sidebar-left-w) 1fr;
+  }
+  .sidebar-right { display: none; }
+  .content-feed { border-right: none; }
+}
+
+/* ── Mobile (≤640px) — single column ── */
+@media (max-width: 640px) {
+  :root { --navbar-height: 54px; }
+
+  .main-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-left { display: none; }
+  .content-feed {
+    padding: 12px;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    border: none;
+  }
+  .mobile-bottom-nav { display: flex; }
+
+  /* Navbar */
+  .nav-actions .user-info { display: none; }
+  .brand-logo > span:first-of-type { font-size: 16px; }
+
+  /* Posts */
+  .post-excerpt { -webkit-line-clamp: 3; }
+  .vote-col { min-width: 40px; padding: 10px 6px; }
+
+  /* Auth */
+  .auth-card { padding: 24px 20px; border-radius: var(--radius-lg); }
+
+  /* Profile */
+  .profile-header { flex-direction: column; align-items: center; text-align: center; }
+  .profile-meta { justify-content: center; }
+
+  /* Modal */
+  .modal-card { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .modal-overlay { align-items: flex-end; padding: 0; }
+
+  /* Community header */
+  .community-stats { flex-wrap: wrap; gap: 12px; }
+
+  /* Stats grid */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Chat bubble */
+  .chat-bubble { max-width: 85%; }
+
+  /* Tabs scroll */
+  .page-tabs { overflow-x: auto; scrollbar-width: none; }
+  .page-tabs::-webkit-scrollbar { display: none; }
+  .page-tab { white-space: nowrap; }
+
+  /* Group card */
+  .group-card-header { flex-direction: column; }
+
+  /* Feed tabs */
+  .feed-tabs { gap: 2px; }
+  .tab-btn { padding: 6px 8px; font-size: 11px; }
+  .tab-btn span { display: none; }
+}
+
+/* ── Tiny (≤360px) ── */
+@media (max-width: 360px) {
+  .post-actions { gap: 2px; }
+  .post-action-btn span { display: none; }
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Reducción de movimiento ── */
+@media (prefers-reduced-motion: reduce) {
+  .post-card, .group-card, .btn, .nav-item, .tab-btn {
+    transition: none;
+  }
+  @keyframes shimmer { from, to { background-position: 0 0; } }
+}
+
+/* ── Print ── */
+@media print {
+  .navbar, .sidebar-left, .sidebar-right, .mobile-bottom-nav,
+  .modal-overlay, .post-actions, .vote-col { display: none !important; }
+  .main-wrapper { display: block; }
+  .content-feed { padding: 0; }
+  body { background: #fff; color: #000; }
+}

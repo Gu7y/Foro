@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo | Grupos de Estudio</title>
+  <meta name="description" content="Encontrá y creá grupos de estudio universitarios en Nexo.">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .grupos-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+    .modal-cuadro { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media(max-width:480px){ .modal-cuadro{ grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="app-container">
+
+  <header class="navbar">
+    <div class="nav-brand">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">N</div>
+        <span>Nexo</span>
+        <span class="brand-tag">Universitario</span>
+      </a>
+    </div>
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="search" id="globalSearchInput" class="search-input" placeholder="Buscar grupos por materia, sede...">
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button id="themeToggleBtn" class="theme-toggle-btn">🌙</button>
+      <button id="openGroupModal" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+        <span>Crear Grupo</span>
+      </button>
+      <a href="perfil.html" class="user-profile-btn">
+        <div class="avatar">L</div>
+        <div class="user-info"><span class="user-name">lucas_isi</span><span class="user-role">Sistemas · 3° año</span></div>
+      </a>
+    </div>
+  </header>
+
+  <div class="main-wrapper">
+    <aside class="sidebar-left">
+      <nav class="nav-menu">
+        <span class="menu-label">Navegación</span>
+        <a href="index.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Feed Principal</span></a>
+        <a href="apuntes.html" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Banco de Apuntes</span></a>
+        <a href="grupos.html" class="nav-item active"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Grupos de Estudio</span></a>
+      </nav>
+      <div class="sidebar-filter-box">
+        <label class="menu-label" for="filterGrupoMateria" style="padding:0">Materia</label>
+        <select id="filterGrupoMateria" class="filter-select"></select>
+      </div>
+      <div class="sidebar-filter-box">
+        <label class="menu-label" for="filterGrupoModalidad" style="padding:0">Modalidad</label>
+        <select id="filterGrupoModalidad" class="filter-select">
+          <option value="">Todas</option>
+          <option value="presencial">Presencial</option>
+          <option value="virtual">Virtual</option>
+          <option value="mixto">Mixto</option>
+        </select>
+      </div>
+      <div class="sidebar-filter-box">
+        <label class="menu-label" for="filterGrupoEstado" style="padding:0">Estado</label>
+        <select id="filterGrupoEstado" class="filter-select">
+          <option value="">Todos</option>
+          <option value="activo">Activos</option>
+          <option value="completo">Completos</option>
+        </select>
+      </div>
+    </aside>
+
+    <main class="content-feed">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <div>
+          <h1 style="font-size:var(--text-xl);font-weight:800;color:var(--text-main);">Grupos de Estudio</h1>
+          <p style="font-size:var(--text-sm);color:var(--text-muted);margin-top:2px;">Encontrá compañeros para estudiar juntos</p>
+        </div>
+        <div class="page-tabs" style="margin:0;border:none;">
+          <button class="page-tab active" data-filter="todos">Todos</button>
+          <button class="page-tab" data-filter="mios">Mis grupos</button>
+        </div>
+      </div>
+
+      <div id="gruposContainer" class="grupos-grid"></div>
+    </main>
+
+    <aside class="sidebar-right">
+      <div class="widget-card">
+        <div class="widget-title">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span>¿Cómo funciona?</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:var(--text-xs);color:var(--text-muted);line-height:1.5;">
+          <p>🔍 Buscá grupos por materia, modalidad o sede.</p>
+          <p>✋ Uníte directamente o solicitá ingreso si el grupo requiere aprobación.</p>
+          <p>💬 Una vez aceptado, accedés al chat del grupo.</p>
+          <p>➕ Creá tu propio grupo y elegís el cupo y la privacidad.</p>
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:12px;justify-content:center;" id="openGroupModal2">Crear mi grupo</button>
+      </div>
+      <div class="widget-card">
+        <div class="widget-title"><span>📊 Estadísticas</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:var(--text-sm);">
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Grupos activos</span><strong style="color:var(--accent-emerald)">47</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Estudiantes en grupos</span><strong>184</strong></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Grupos esta semana</span><strong style="color:var(--accent-violet)">12</strong></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html" class="mobile-nav-item"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Inicio</span></a>
+    <a href="apuntes.html" class="mobile-nav-item"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Apuntes</span></a>
+    <a href="grupos.html" class="mobile-nav-item active"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span>Grupos</span></a>
+    <a href="perfil.html" class="mobile-nav-item"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span>Perfil</span></a>
+  </nav>
+</div>
+
+<!-- MODAL CREAR GRUPO -->
+<div id="groupModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="groupModalTitle">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 class="modal-title" id="groupModalTitle">Crear grupo de estudio</h2>
+      <button class="btn-icon close-modal-btn" aria-label="Cerrar">&times;</button>
+    </div>
+    <form id="groupForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="gNombre">Nombre del grupo <span style="color:var(--accent-rose)">*</span></label>
+          <input type="text" id="gNombre" class="form-input" placeholder="Ej: AED — Parcial Octubre" required>
+        </div>
+        <div class="modal-cuadro">
+          <div class="form-group">
+            <label class="form-label" for="gMateria">Materia <span style="color:var(--accent-rose)">*</span></label>
+            <select id="gMateria" class="form-select" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gModalidad">Modalidad</label>
+            <select id="gModalidad" class="form-select">
+              <option value="presencial">Presencial</option>
+              <option value="virtual">Virtual</option>
+              <option value="mixto">Mixto</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gFecha">Fecha</label>
+            <input type="date" id="gFecha" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gHorario">Horario inicio</label>
+            <input type="time" id="gHorario" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gCupo">Cupo máximo</label>
+            <input type="number" id="gCupo" class="form-input" min="2" max="30" value="6">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="gPrivacidad">Privacidad</label>
+            <select id="gPrivacidad" class="form-select">
+              <option value="publico">Público (entrada libre)</option>
+              <option value="aprobacion">Con aprobación</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="gDesc">Descripción</label>
+          <textarea id="gDesc" class="form-textarea" rows="3" placeholder="¿Qué van a repasar? ¿Qué se necesita para unirse?"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal-btn">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Crear grupo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="js/mock-data.js"></script>
+<script>
+  (function(){ const t=localStorage.getItem('nexo-theme')||'dark'; document.documentElement.setAttribute('data-theme',t); document.getElementById('themeToggleBtn').innerHTML=t==='dark'?'☀️':'🌙'; })();
+  document.getElementById('themeToggleBtn').addEventListener('click',()=>{ const c=document.documentElement.getAttribute('data-theme'); const n=c==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',n); localStorage.setItem('nexo-theme',n); document.getElementById('themeToggleBtn').innerHTML=n==='dark'?'☀️':'🌙'; });
+
+  const MOD_ICON = { presencial:'🏫', virtual:'💻', mixto:'🔀' };
+  const MOD_LABEL = { presencial:'Presencial', virtual:'Virtual', mixto:'Mixto' };
+
+  function renderGrupos(list) {
+    const c = document.getElementById('gruposContainer');
+    if (!list.length) {
+      c.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">👥</div><div class="empty-title">Sin grupos</div><div class="empty-desc">No hay grupos con esos filtros. ¡Creá el tuyo!</div></div>';
+      return;
+    }
+    c.innerHTML = list.map(g => {
+      const pct = Math.round((g.cupo_actual / g.cupo_maximo) * 100);
+      const full = g.estado === 'completo';
+      const mine = g.miembro;
+      return `
+      <div class="group-card">
+        <div class="group-card-header">
+          <div>
+            <div class="group-card-title">${g.nombre}</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:2px;">${g.materia}</div>
+          </div>
+          <span class="post-badge ${full?'badge-duda':mine?'badge-info':'badge-apunte'}">${full?'Completo':mine?'Miembro':'Abierto'}</span>
+        </div>
+        <div class="group-card-meta">
+          <span>${MOD_ICON[g.modalidad]} ${MOD_LABEL[g.modalidad]}</span>
+          <span>📍 ${g.sede}${g.zona?', '+g.zona:''}</span>
+          ${g.fecha ? `<span>📅 ${g.fecha}</span>` : ''}
+          ${g.horario ? `<span>🕐 ${g.horario}</span>` : ''}
+        </div>
+        <p style="font-size:var(--text-xs);color:var(--text-muted);margin-bottom:10px;line-height:1.45;">${g.descripcion}</p>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:var(--text-xs);color:var(--text-muted);">
+          <span>${g.cupo_actual}/${g.cupo_maximo} integrantes</span>
+        </div>
+        <div class="capacity-bar"><div class="capacity-fill" style="width:${pct}%"></div></div>
+        <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
+          ${mine
+            ? `<a href="chat.html?grupo=${g.id}" class="btn btn-primary btn-sm"><svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>Chat del grupo</a>`
+            : full
+              ? `<button class="btn btn-secondary btn-sm" disabled>Cupo completo</button>`
+              : g.privacidad === 'aprobacion'
+                ? `<button class="btn btn-secondary btn-sm" onclick="solicitar(${g.id},this)">Solicitar ingreso</button>`
+                : `<button class="btn btn-primary btn-sm" onclick="unirse(${g.id},this)">Unirme</button>`
+          }
+          <span style="flex:1"></span>
+          <span style="font-size:var(--text-xs);color:var(--text-muted);">Admin: u/${g.creador}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function unirse(id, btn) {
+    const g = NEXO.grupos.find(x=>x.id===id);
+    if (!g) return;
+    g.miembro = true; g.cupo_actual++;
+    if (g.cupo_actual >= g.cupo_maximo) g.estado = 'completo';
+    applyGrupoFilters();
+  }
+  function solicitar(id, btn) {
+    btn.disabled = true; btn.textContent = 'Solicitud enviada';
+  }
+
+  let grupoFilter = 'todos';
+  function applyGrupoFilters() {
+    const materia   = document.getElementById('filterGrupoMateria').value;
+    const modalidad = document.getElementById('filterGrupoModalidad').value;
+    const estado    = document.getElementById('filterGrupoEstado').value;
+    const q         = document.getElementById('globalSearchInput').value.toLowerCase();
+    let list = NEXO.grupos.filter(g => {
+      if (grupoFilter === 'mios' && !g.miembro) return false;
+      if (materia   && g.materia !== NEXO.materias.find(m=>m.id==materia)?.nombre) return false;
+      if (modalidad && g.modalidad !== modalidad) return false;
+      if (estado    && g.estado !== estado) return false;
+      if (q && !g.nombre.toLowerCase().includes(q) && !g.materia.toLowerCase().includes(q)) return false;
+      return true;
+    });
+    renderGrupos(list);
+  }
+
+  /* populate selects */
+  const mSel = document.getElementById('filterGrupoMateria');
+  mSel.innerHTML = '<option value="">Todas las materias</option>';
+  NEXO.materias.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.nombre; mSel.appendChild(o); });
+
+  ['filterGrupoMateria','filterGrupoModalidad','filterGrupoEstado'].forEach(id=>document.getElementById(id).addEventListener('change',applyGrupoFilters));
+  document.getElementById('globalSearchInput').addEventListener('input',applyGrupoFilters);
+  document.querySelectorAll('.page-tab[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.page-tab[data-filter]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); grupoFilter=btn.dataset.filter; applyGrupoFilters();
+  }));
+
+  /* modal create group */
+  const modal = document.getElementById('groupModal');
+  ['openGroupModal','openGroupModal2'].forEach(id=>document.getElementById(id)?.addEventListener('click',()=>modal.classList.add('open')));
+  document.querySelectorAll('.close-modal-btn').forEach(b=>b.addEventListener('click',()=>modal.classList.remove('open')));
+  modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+  const gmSel = document.getElementById('gMateria');
+  NEXO.materias.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.nombre; gmSel.appendChild(o); });
+
+  document.getElementById('groupForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const nombre = document.getElementById('gNombre').value.trim();
+    const mat    = document.getElementById('gMateria');
+    const mod    = document.getElementById('gModalidad').value;
+    const cupo   = Number(document.getElementById('gCupo').value);
+    const priv   = document.getElementById('gPrivacidad').value;
+    const desc   = document.getElementById('gDesc').value.trim();
+    if (!nombre) return;
+    NEXO.grupos.unshift({ id:Date.now(), nombre, materia:mat.options[mat.selectedIndex].text, modalidad:mod, privacidad:priv, cupo_maximo:cupo, cupo_actual:1, fecha:null, horario:null, sede:'UTN-BA', zona:null, descripcion:desc||'Sin descripción.', creador:'lucas_isi', estado:'activo', miembro:true });
+    modal.classList.remove('open');
+    e.target.reset();
+    grupoFilter='mios';
+    document.querySelectorAll('.page-tab[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='mios'));
+    applyGrupoFilters();
+  });
+
+  applyGrupoFilters();
+</script>
+</body>
+</html>
